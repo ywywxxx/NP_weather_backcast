@@ -1,23 +1,6 @@
-import os
-import requests
-from time import sleep
-
-from zoneinfo import ZoneInfo
-from astral import LocationInfo
-from astral.sun import sun
-from datetime import datetime, time, date, timedelta
-
-import os
-import requests
-import matplotlib.dates as mdates
-from time import sleep
-from dateutil import parser
-from dotenv import load_dotenv
-import json
-
-import numpy as np
+from datetime import datetime, timedelta
 from collections import defaultdict, Counter
-import math
+import numpy as np
 
 import drive
 
