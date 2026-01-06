@@ -38,4 +38,4 @@ def getOriginalData(latitude, longitude, user_agent={"User-Agent": "Pikachu"}):
         f'https://api.weather.gov/gridpoints/{office}/{gridX},{gridY}',
         headers=user_agent
     ).json()
-    return gridpoints_data["properties"]["periods"]
+    return gridpoints_data
