@@ -2,6 +2,11 @@ import os
 import requests
 from time import sleep
 
+from zoneinfo import ZoneInfo
+from astral import LocationInfo
+from astral.sun import sun
+from datetime import datetime, time, date
+
 # The function to get the hourly forecast
 def getHourlyForecast(latitude, longitude, user_agent={"User-Agent": "Pikachu"}):
     points_data = requests.get(
@@ -70,7 +75,7 @@ def get_latest_observation(lat, lon, user_agent={"User-Agent": "Pikachu"}):
     return obs
 
 
-
+# Get the observation in a specific range; 
 def get_observation(lat, lon, start, end, limit=100, user_agent={"User-Agent": "Pikachu"}):
     points = requests.get(
         f"https://api.weather.gov/points/{lat},{lon}",
@@ -92,5 +97,19 @@ def get_observation(lat, lon, start, end, limit=100, user_agent={"User-Agent": "
         headers=user_agent,
         params=params
     ).json()
-
     return obs
+
+
+
+
+# Four UTC timestamp every day ; 
+def return_times(lat: float, lon: float, d: date , tz ):
+    loc = LocationInfo(name="X", region="X", timezone="UTC", latitude=lat, longitude=lon)
+    s = sun(loc.observer, date=d, tzinfo=ZoneInfo("UTC"))
+    
+    dt_sunrise = s["sunrise"].replace(second=0, microsecond=0)
+    dt_1201 = datetime.combine(d, time(12, 1),tzinfo=tz).astimezone(ZoneInfo('UTC')) 
+    dt_sunset =  s["sunset"].replace(second=0, microsecond=0)
+    dt_2359 = datetime.combine(d, time(23, 59),tzinfo=tz).astimezone(ZoneInfo('UTC')) 
+
+    return dt_sunrise, dt_1201, dt_sunset, dt_2359
