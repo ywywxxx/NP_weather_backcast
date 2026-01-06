@@ -104,12 +104,42 @@ def get_observation(lat, lon, start, end, limit=100, user_agent={"User-Agent": "
 
 # Four UTC timestamp every day ; 
 def return_times(lat: float, lon: float, d: date , tz ):
-    loc = LocationInfo(name="X", region="X", timezone="UTC", latitude=lat, longitude=lon)
-    s = sun(loc.observer, date=d, tzinfo=ZoneInfo("UTC"))
+    loc = LocationInfo(name="X", region="X", timezone=tz, latitude=lat, longitude=lon)
+    s = sun(loc.observer, date=d, tzinfo=tz)
+    
+    dt_sunrise = s["sunrise"].replace(second=0, microsecond=0).astimezone(ZoneInfo('UTC')) 
+    dt_1201 = datetime.combine(d, time(12, 1),tzinfo=tz).astimezone(ZoneInfo('UTC')) 
+    dt_sunset =  s["sunset"].replace(second=0, microsecond=0).astimezone(ZoneInfo('UTC')) 
+    dt_2359 = datetime.combine(d, time(23, 59),tzinfo=tz).astimezone(ZoneInfo('UTC')) 
+    return dt_sunrise, dt_1201, dt_sunset, dt_2359
+
+
+def return_local_times(lat: float, lon: float, d: date , tz ):
+    loc = LocationInfo(name="X", region="X", timezone=tz, latitude=lat, longitude=lon)
+    s = sun(loc.observer, date=d, tzinfo=tz)
     
     dt_sunrise = s["sunrise"].replace(second=0, microsecond=0)
-    dt_1201 = datetime.combine(d, time(12, 1),tzinfo=tz).astimezone(ZoneInfo('UTC')) 
+    dt_1201 = datetime.combine(d, time(12, 1),tzinfo=tz)
     dt_sunset =  s["sunset"].replace(second=0, microsecond=0)
-    dt_2359 = datetime.combine(d, time(23, 59),tzinfo=tz).astimezone(ZoneInfo('UTC')) 
+    dt_2359 = datetime.combine(d, time(23, 59),tzinfo=tz)
 
     return dt_sunrise, dt_1201, dt_sunset, dt_2359
+
+
+# This function is universal 
+def time_to_date_index(t : datetime , lat: float, lon: float, tz ): 
+    t_local = t.astimezone(tz)
+    d_local = t_local.date()
+    dt_sunrise, dt_1201, dt_sunset, dt_2359= return_local_times( lat , lon , d_local, tz )
+
+    if  t_local <= dt_sunrise:
+        idx = 0
+    elif dt_sunrise <= t_local < dt_1201:
+        idx = 1
+    elif dt_1201 <= t_local < dt_sunset:
+        idx = 2
+    else:
+        idx = 3
+
+    return d_local, idx
+
