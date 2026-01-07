@@ -7,6 +7,24 @@ from astral import LocationInfo
 from astral.sun import sun
 from datetime import datetime, time, date
 
+
+def getgrid(latitude, longitude, user_agent={"User-Agent": "Pikachu"}):
+    points_data = requests.get(
+        f'https://api.weather.gov/points/{latitude},{longitude}',
+        headers=user_agent
+    ).json()
+    office = points_data["properties"]["gridId"]
+    gridX = points_data["properties"]["gridX"]
+    gridY = points_data["properties"]["gridY"]
+
+    sleep(1)
+    
+    return office,gridX, gridY 
+
+
+
+
+
 # The function to get the hourly forecast
 def getHourlyForecast(latitude, longitude, user_agent={"User-Agent": "Pikachu"}):
     points_data = requests.get(
@@ -45,61 +63,20 @@ def getOriginalData(latitude, longitude, user_agent={"User-Agent": "Pikachu"}):
     ).json()
     return gridpoints_data
 
+# This function is used to get the current weather report 
+def getinstantdata(latitude,longitude,timestamp,API_key):
+    res_point=requests.get(
+		f"https://api.openweathermap.org/data/3.0/onecall/timemachine?lat={lat}&lon={lon}&dt={timestamp}&appid={API_key}"
+	  ).json()
+    return res_point 
 
-# Get the newest data ; 
-def get_latest_observation(lat, lon, user_agent={"User-Agent": "Pikachu"}):
-    # 1. points → observationStations
-    points = requests.get(
-        f"https://api.weather.gov/points/{lat},{lon}",
-        headers=user_agent
+def getdaydata(latitude,longitude,date,API_key):
+    res_day=requests.get(
+    f"https://api.openweathermap.org/data/3.0/onecall/day_summary?lat={lat}&lon={lon}&date={date}&appid={API_key}"
     ).json()
-
-    sleep(1)
-
-    stations_url = points["properties"]["observationStations"]
-    stations = requests.get(
-        stations_url,
-        headers=user_agent
-    ).json()
-
-    station_id = stations["features"][0]["properties"]["stationIdentifier"]
-
-    sleep(1)
-
-    # 2. latest observation
-    obs = requests.get(
-        f"https://api.weather.gov/stations/{station_id}/observations/latest",
-        headers=user_agent
-    ).json()
-
-    return obs
-
-
-# Get the observation in a specific range; 
-def get_observation(lat, lon, start, end, limit=100, user_agent={"User-Agent": "Pikachu"}):
-    points = requests.get(
-        f"https://api.weather.gov/points/{lat},{lon}",
-        headers=user_agent
-    ).json()
-
-    sleep(1)
-
-    stations_url = points["properties"]["observationStations"]
-    stations = requests.get(stations_url, headers=user_agent).json()
-
-    station_id = stations["features"][0]["properties"]["stationIdentifier"]
-
-    sleep(1)
-
-    params = {"start": start, "end": end, "limit": limit}
-    obs = requests.get(
-        f"https://api.weather.gov/stations/{station_id}/observations",
-        headers=user_agent,
-        params=params
-    ).json()
-    return obs
-
-
+    return res_day
+    
+    
 
 
 # Four UTC timestamp every day ; 
@@ -134,9 +111,9 @@ def time_to_date_index(t : datetime , lat: float, lon: float, tz ):
 
     if  t_local <= dt_sunrise:
         idx = 0
-    elif dt_sunrise <= t_local < dt_1201:
+    elif dt_sunrise < t_local <= dt_1201:
         idx = 1
-    elif dt_1201 <= t_local < dt_sunset:
+    elif dt_1201 < t_local <= dt_sunset:
         idx = 2
     else:
         idx = 3
