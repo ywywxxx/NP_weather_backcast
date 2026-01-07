@@ -16,9 +16,12 @@ class CheckTime:
         if day is None:
             day = datetime.now(self.tz).date()
         self.day = day
+        """
+        day: 'YYYY-MM-DD' string or date
+        """
         loc = LocationInfo(
-            # name=location.name,
-            # region="X",
+            name=location.name,
+            region="X",
             timezone=location.timezone,
             latitude=location.lat,
             longitude=location.lon,
@@ -45,24 +48,34 @@ class CheckTime:
         self.run3 = self.sunset_local - delta
         self.run4 = self.midnight_local - delta
 
-        # self.sunrise_local
-        # self.sunset_local
-        # self.sunrise_UTC
-        # self.sunset_UTC
-        # self.noon_UTC
-        # self.midnight_UTC
-        # self.run1 = self.sunrise_local -30min
-        # self.run2 = 12:01pm -30min
-        # self.run3 = self.sunset_local -30min
-        # self.run4 = 11:59pm -30min
-loc = Location("Stanford", 37.4275, -122.1697)
-ct = CheckTime(loc)
+# #test:
+# loc = Location("Stanford", 37.4275, -122.1697)
+# ct = CheckTime(loc)
 
-print("sunrise_local:", ct.sunrise_local)
-print("sunrise_UTC:", ct.sunrise_UTC)
-print("run1:", ct.run1)
+# print("day:", ct.day)
+# print("sunrise_local:", ct.sunrise_local)
+# print("sunrise_UTC:", ct.sunrise_UTC)
+# print("run1:", ct.run1)
 
-        
+
+def time2index(t: datetime, location: Location):
+    tz = ZoneInfo(location.timezone)
+    t_local = t.astimezone(tz)
+    d_local = t_local.date()
+
+    ct = CheckTime(location, day=d_local)
+
+    if t_local <= ct.sunrise_local:
+        idx = 0
+    elif t_local <= ct.noon_local:
+        idx = 1
+    elif t_local <= ct.sunset_local:
+        idx = 2
+    else:
+        idx = 3
+
+    return d_local, idx
+
 
 
 
