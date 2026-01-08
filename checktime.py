@@ -4,6 +4,9 @@ from zoneinfo import ZoneInfo
 from astral import LocationInfo
 from astral.sun import sun
 from location_info import Location   
+from collections import defaultdict
+from datetime import datetime
+
 
 class CheckTime:
     def __init__(
@@ -76,6 +79,22 @@ def time2index(t: datetime, location: Location):
 
     return d_local, idx
 
+
+def group_by_index(records, time_key, location, now_dt):
+    groups = defaultdict(list)
+
+    d_now, idx_now = time2index(now_dt, location)
+
+    for r in records:
+        if time_key == "validTime":
+            dt_pred = datetime.fromisoformat(r["validTime"].split("/")[0])
+        else:
+            dt_pred = datetime.fromisoformat(r[time_key])
+
+        d_pred, idx_pred = time2index(dt_pred, location)
+        groups[(d_now, idx_now, d_pred, idx_pred)].append(r)
+
+    return groups
 
 
 

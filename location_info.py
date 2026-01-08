@@ -43,3 +43,39 @@ class Location:
 # print("gridX:", loc.gridX)
 # print("gridY:", loc.gridY)
 
+# class location:
+#     def __init__(
+#         self,
+#         name: str
+#         lat: float,
+#         lon: float,
+#         office: str
+#         gridX: int
+#         gridY: int
+
+#         user_agent: str = "Pikachu",
+#     ):
+#         self.name = name
+#         self.lat = lat
+#         self.lon = lon
+#         self.office = self.getOffice(lat,lon,user_agent)
+#         self.gridX = self.getgridX(lat,lon,user_agent)
+#         self.gridY = self.getgridY(lat,lon,user_agent)
+    
+#         def getOffice(lat,lon,user_agent):
+#             url = f'https://api.weather.gov/points/{lat},{lon}'
+#             response = requests.get(url, headers=user_agent).json()
+#             office = response["properties"]["gridId"]
+#             return office
+#         def getgridX(lat,lon,user_agent):
+#             url = f'https://api.weather.gov/points/{lat},{lon}'
+#             response = requests.get(url, headers=user_agent).json()
+#             gridX = response["properties"]["gridX"]
+#             return gridX       
+#         def getgridX(lat,lon,user_agent):
+#             url = f'https://api.weather.gov/points/{lat},{lon}'
+#             response = requests.get(url, headers=user_agent).json()
+#             gridY = response["properties"]["gridY"]
+#             return gridY        
+
+

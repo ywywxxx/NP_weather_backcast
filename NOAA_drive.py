@@ -10,7 +10,7 @@ def get_hourly_forecast(location: Location):
 
 
 # This function is used to get the original data 
-def get_original_data(location):
+def get_raw_data(location):
     url = f"https://api.weather.gov/gridpoints/{location.office}/{location.gridX},{location.gridY}"
     r = requests.get(url, headers=location.user_agent, timeout=20)
     r.raise_for_status()
