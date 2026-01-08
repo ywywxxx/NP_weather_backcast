@@ -3,11 +3,15 @@ from __future__ import annotations
 from typing import Dict, Any, List, Tuple, Optional
 
 from checktime import group_by_index
+from location_info import Location
+
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
-# ---------------------------
-# 2) 桶内聚合：从 records 里抽 value -> mean/sum
-# ---------------------------
+from NOAA_drive import get_raw_data
+
+
 
 def _agg_values(records: List[Dict[str, Any]], agg: str) -> Optional[float]:
     """
@@ -122,5 +126,31 @@ def process_raw_data(raw_data_json: Dict[str, Any], location, now_dt) -> Dict[Tu
 
 # features_by_group = process_raw_data(raw_json, location=loc, now_dt=now_dt)
 # # features_by_group[(d_now, idx_now, d_pred, idx_pred)] -> dict
+
+
+def clean_raw(location: Location, now_dt=None):
+    if now_dt is None:
+        now_dt = datetime.now(ZoneInfo(location.timezone))
+
+    # 这一步拿到的 JSON 已经包含 skyCover/snowLevel/... 等字段
+    gridpoints_json = get_raw_data(location)
+
+    # 直接喂给 process_raw_data
+    out = process_raw_data(gridpoints_json, location=location, now_dt=now_dt)
+
+    return out
+
+# test:
+loc = Location(
+    name="Stanford",
+    lat=37.4275,
+    lon=-122.1697,
+)
+
+raw_by_group = clean_raw(loc)
+for k in sorted(raw_by_group.keys())[:3]:
+    print(k, raw_by_group[k])
+
+
 
 

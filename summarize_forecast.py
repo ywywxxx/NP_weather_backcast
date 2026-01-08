@@ -1,5 +1,15 @@
+from __future__ import annotations
 from collections import Counter
 import numpy as np
+
+
+from datetime import datetime
+from zoneinfo import ZoneInfo
+from location_info import Location
+from NOAA_drive import get_hourly_forecast
+from checktime import group_by_index    
+
+
 
 """
 records: come from same index group
@@ -65,19 +75,44 @@ def summarize_hourly_forecast(records):
         return Counter(xs).most_common(1)[0][0] if xs else None
 
     out = {
-        "n": len(records),
+        "has_rain": has_rain,
+        "has_snow": has_snow,
         "temp_C_mean": float(np.mean(temps_c)) if temps_c else None,
         "temp_C_min": float(np.min(temps_c)) if temps_c else None,
         "temp_C_max": float(np.max(temps_c)) if temps_c else None,
-
         "precip_prob_max": float(np.max(precip_probs)) if precip_probs else None,
         "wind_kmh_mean": float(np.mean(winds_kmh)) if winds_kmh else None,
-
         "wind_dir_mode": mode_or_none(wind_dirs),
         "shortForecast_mode": mode_or_none(short_fc),
-
-        "has_rain": has_rain,
-        "has_snow": has_snow,
     }
     return out
 
+
+
+
+def clean_forecast(location: Location, now_dt=None):
+    if now_dt is None:
+        now_dt = datetime.now(ZoneInfo(location.timezone))
+
+    hourly_json = get_hourly_forecast(location)
+    periods = hourly_json["properties"]["periods"]
+
+    groups = group_by_index(periods, time_key="startTime", location=location, now_dt=now_dt)
+
+    out = {}
+    for key, recs in groups.items():
+        feats = summarize_hourly_forecast(recs)
+        out[key] = {"group_key": key, **feats}
+
+    return out
+
+# test:
+loc = Location(
+    name="Stanford",
+    lat=37.4275,
+    lon=-122.1697,
+)
+
+forecast_by_group = clean_forecast(loc)
+for k in sorted(forecast_by_group.keys())[:3]:
+    print(k, forecast_by_group[k])
