@@ -8,7 +8,7 @@ __pycache__/
 venv/
 .env
 .ipynb_checkpoints
-
+.DS_Store
 
 # Node / Next.js
 node_modules/
