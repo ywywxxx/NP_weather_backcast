@@ -1,0 +1,24 @@
+{
+  "group_key": {
+    "date_start": "2026-01-12",
+    "time_group_start": 1,
+    "date_end": "2026-01-12",
+    "time_group_end": 3
+  },
+  "features": {
+    "has_rain": 0,
+    "has_snow": 0,
+    "temp_C_mean": 9.537037037037038,
+    "temp_C_min": 7.777777777777778,
+    "temp_C_max": 12.777777777777779,
+    "precip_prob_max": 0.0,
+    "wind_kmh_mean": 5.364466666666668,
+    "wind_dir_mode": "NE",
+    "shortForecast_mode": "Clear",
+    "skyCover_mean": 2.4,
+    "snowLevel_mean": 2365.5528,
+    "snowfallAmount_sum": 0.0,
+    "quantitativePrecipitation_sum": 0.0,
+    "iceAccumulation_sum": 0.0
+  }
+}

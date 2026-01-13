@@ -140,16 +140,16 @@ def clean_raw(location: Location, now_dt=None):
 
     return out
 
-# test:
-loc = Location(
-    name="Stanford",
-    lat=37.4275,
-    lon=-122.1697,
-)
+# #test:
+# loc = Location(
+#     name="Stanford",
+#     lat=37.4275,
+#     lon=-122.1697,
+# )
 
-raw_by_group = clean_raw(loc)
-for k in sorted(raw_by_group.keys())[:3]:
-    print(k, raw_by_group[k])
+# raw_by_group = clean_raw(loc)
+# for k in sorted(raw_by_group.keys())[:3]:
+#     print(k, raw_by_group[k])
 
 
 

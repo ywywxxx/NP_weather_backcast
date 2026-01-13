@@ -106,13 +106,13 @@ def clean_forecast(location: Location, now_dt=None):
 
     return out
 
-# test:
-loc = Location(
-    name="Stanford",
-    lat=37.4275,
-    lon=-122.1697,
-)
+# # test:
+# loc = Location(
+#     name="Stanford",
+#     lat=37.4275,
+#     lon=-122.1697,
+# )
 
-forecast_by_group = clean_forecast(loc)
-for k in sorted(forecast_by_group.keys())[:3]:
-    print(k, forecast_by_group[k])
+# forecast_by_group = clean_forecast(loc)
+# for k in sorted(forecast_by_group.keys())[:3]:
+#     print(k, forecast_by_group[k])

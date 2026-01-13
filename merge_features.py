@@ -30,6 +30,6 @@ loc = Location(
     lon=-122.1697,
 )
 
-merged_by_group = merge_clean(loc)
+merged_by_group = clean_data(loc)
 for k in sorted(merged_by_group.keys())[:3]:
     print(k, merged_by_group[k])
