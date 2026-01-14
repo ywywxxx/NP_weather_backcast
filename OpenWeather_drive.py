@@ -56,8 +56,9 @@ def get_yesterday_data(location: Location, api_key: Optional[str] = None):
     return r.json()
 
 
-#test:
-loc = Location("Stanford", 37.4275, -122.1697)
-# ct = CheckTime(loc)
-out = get_yesterday_data(loc)
-print(out)
+if __name__ == "__main__":
+    #test:
+    loc = Location("Stanford", 37.4275, -122.1697)
+    # ct = CheckTime(loc)
+    out = get_yesterday_data(loc)
+    print(out)
