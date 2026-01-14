@@ -33,7 +33,7 @@ def get_instant_data(location: Location, timestamp, api_key: Optional[str] = Non
     return r.json()
 
 
-def get_yesterday_data(checktime: CheckTime, api_key: Optional[str] = None):
+def get_yesterday_data(location: Location, api_key: Optional[str] = None):
 
 
     if api_key is None:
@@ -42,11 +42,13 @@ def get_yesterday_data(checktime: CheckTime, api_key: Optional[str] = None):
     if not api_key:
         raise ValueError("Missing OpenWeather_API_KEY.")
     
-    yesterday = checktime.day - timedelta(days=1)
+    ct = CheckTime(location)
+
+    yesterday = ct.day - timedelta(days=1)
 
     url = (
         "https://api.openweathermap.org/data/3.0/onecall/day_summary"
-        f"?lat={checktime.location.lat}&lon={checktime.location.lon}"
+        f"?lat={ct.location.lat}&lon={ct.location.lon}"
         f"&date={yesterday}&appid={api_key}"
     )
     r = requests.get(url, timeout=20)
@@ -54,8 +56,8 @@ def get_yesterday_data(checktime: CheckTime, api_key: Optional[str] = None):
     return r.json()
 
 
-# #test:
-# loc = Location("Stanford", 37.4275, -122.1697)
+#test:
+loc = Location("Stanford", 37.4275, -122.1697)
 # ct = CheckTime(loc)
-# out = get_yesterday_data(ct)
-# print(out)
+out = get_yesterday_data(loc)
+print(out)
