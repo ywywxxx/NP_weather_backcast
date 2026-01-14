@@ -23,13 +23,16 @@ def clean_data(location, now_dt=None):
         out[k] = merged
 
     return out
-# test:
-loc = Location(
-    name="Stanford",
-    lat=37.4275,
-    lon=-122.1697,
-)
 
-merged_by_group = clean_data(loc)
-for k in sorted(merged_by_group.keys())[:3]:
-    print(k, merged_by_group[k])
+
+if __name__ == "__main__":
+# test:
+    loc = Location(
+        name="Stanford",
+        lat=37.4275,
+        lon=-122.1697,
+    )
+
+    merged_by_group = clean_data(loc)
+    for k in sorted(merged_by_group.keys())[:3]:
+        print(k, merged_by_group[k])
