@@ -1,0 +1,9 @@
+from pathlib import Path
+from find_similar_day.features import load_merged_jsons
+
+paths = sorted(Path("data_example").glob("merged*.json"))
+
+records, X = load_merged_jsons(paths, location_id="Stanford")
+
+print(len(records), X.shape)
+print(records[0])

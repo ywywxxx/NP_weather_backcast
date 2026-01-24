@@ -36,3 +36,4 @@ if __name__ == "__main__":
     merged_by_group = clean_data(loc)
     for k in sorted(merged_by_group.keys()):
         print(k, merged_by_group[k])
+

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Similarity Results Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "cornflower": "#7096D1",
+                        "sage": "#8BA888",
+                        "cream": "#FFFDF5",
+                        "pale-yellow": "#FEF9E7",
+                        "monet-bg": "#F9F7F2",
+                        "monet-dark-bg": "#2D3032",
+                        "monet-accent": "#D1E0E0",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Crimson Pro", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1.25rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-monet-bg dark:bg-monet-dark-bg font-display text-[#4A5D4E] dark:text-[#EAE7DC];
+            }
+        }
+        .monet-card {
+            background-color: #FFFDF9;
+            border: 1px solid rgba(139, 168, 136, 0.15);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .dark .monet-card {
+            background-color: #383D3F;
+            border-color: rgba(112, 150, 209, 0.15);
+        }
+        .chart-grid {
+            background-image: linear-gradient(rgba(139, 168, 136, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(139, 168, 136, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen">
+<header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md dark:bg-monet-dark-bg/90 border-b border-sage/10">
+<div class="flex items-center p-4 justify-between max-w-lg mx-auto">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 text-sage/60">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<h2 class="text-[#3A4D3F] dark:text-monet-bg text-lg font-serif font-bold leading-tight tracking-tight flex-1 text-center">Analysis Detail</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 text-cornflower/70">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-lg mx-auto pb-32 px-4">
+<div class="mt-6 mb-8 text-center">
+<p class="text-sage/60 text-[10px] font-bold uppercase tracking-[0.2em] mb-2 font-display">Comparison: Rank #1</p>
+<h1 class="text-2xl font-serif font-bold text-[#3A4D3F] dark:text-white italic">Target vs. 14 Oct 1998</h1>
+<div class="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-cornflower/10 rounded-full border border-cornflower/20">
+<span class="text-[10px] font-bold text-cornflower uppercase tracking-wider">Similarity Score</span>
+<span class="text-xs font-mono font-bold text-cornflower">0.842</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="monet-card rounded-2xl p-4 flex flex-col h-56">
+<div class="flex justify-between items-start mb-4">
+<p class="text-[9px] font-bold text-sage/70 uppercase tracking-widest">Temperature</p>
+<span class="material-symbols-outlined text-xs text-cornflower">show_chart</span>
+</div>
+<div class="flex-1 chart-grid relative overflow-hidden rounded-lg border border-sage/5">
+<svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+<path d="M0,80 Q25,20 50,50 T100,30" fill="none" stroke="#7096D1" stroke-width="2"></path>
+<path d="M0,85 Q25,30 50,60 T100,40" fill="none" opacity="0.6" stroke="#8BA888" stroke-dasharray="2,2" stroke-width="2"></path>
+</svg>
+<div class="absolute bottom-1 left-1 text-[7px] text-sage/40">24h Cycle</div>
+</div>
+</div>
+<div class="monet-card rounded-2xl p-4 flex flex-col h-56">
+<div class="flex justify-between items-start mb-4">
+<p class="text-[9px] font-bold text-sage/70 uppercase tracking-widest">Precipitation</p>
+<span class="material-symbols-outlined text-xs text-cornflower">bar_chart</span>
+</div>
+<div class="flex-1 flex items-end justify-around pb-2 gap-1 px-1">
+<div class="w-2 bg-cornflower rounded-t-sm h-[60%] opacity-80"></div>
+<div class="w-2 bg-sage rounded-t-sm h-[40%] opacity-40"></div>
+<div class="w-2 bg-cornflower rounded-t-sm h-[80%] opacity-80"></div>
+<div class="w-2 bg-sage rounded-t-sm h-[70%] opacity-40"></div>
+<div class="w-2 bg-cornflower rounded-t-sm h-[30%] opacity-80"></div>
+<div class="w-2 bg-sage rounded-t-sm h-[20%] opacity-40"></div>
+</div>
+<div class="mt-2 text-[7px] text-sage/40 text-center font-bold">Variance: 2.4mm</div>
+</div>
+</div>
+<div class="monet-card rounded-2xl p-5 mb-8 border-l-4 border-l-cornflower">
+<h3 class="text-[10px] font-bold text-sage/80 uppercase tracking-widest mb-2 font-display">Key Similarity Insight</h3>
+<p class="text-sm font-serif italic text-[#3A4D3F] dark:text-monet-accent/90 leading-relaxed">
+                Atmospheric moisture profiles show strong correlation in the 850hPa layer, mirroring the pre-frontal conditions of October 1998. The surface convergence pattern remains the primary driver of this match.
+            </p>
+</div>
+<section class="monet-card rounded-2xl overflow-hidden">
+<h3 class="text-sage/80 dark:text-monet-bg/60 text-[11px] font-bold uppercase tracking-[0.2em] px-5 pt-6 pb-3 font-display">Other Close Matches</h3>
+<div class="divide-y divide-sage/5">
+<div class="px-5 py-4 flex items-center justify-between hover:bg-sage/5 transition-colors">
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-sage/40 w-6">#2</span>
+<div class="flex flex-col">
+<span class="text-sm font-serif font-medium text-[#3A4D3F] dark:text-gray-200">22 Oct 2005</span>
+<span class="text-[9px] text-sage/60 uppercase tracking-wider font-bold">00z Cycle</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-mono text-sage/80">0.821</span>
+<span class="material-symbols-outlined text-sage/30 text-sm ml-2 align-middle">chevron_right</span>
+</div>
+</div>
+<div class="px-5 py-4 flex items-center justify-between hover:bg-sage/5 transition-colors">
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-sage/40 w-6">#3</span>
+<div class="flex flex-col">
+<span class="text-sm font-serif font-medium text-[#3A4D3F] dark:text-gray-200">03 Nov 2012</span>
+<span class="text-[9px] text-sage/60 uppercase tracking-wider font-bold">06z Cycle</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-mono text-sage/80">0.798</span>
+<span class="material-symbols-outlined text-sage/30 text-sm ml-2 align-middle">chevron_right</span>
+</div>
+</div>
+<div class="px-5 py-4 flex items-center justify-between hover:bg-sage/5 transition-colors">
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-sage/40 w-6">#4</span>
+<div class="flex flex-col">
+<span class="text-sm font-serif font-medium text-[#3A4D3F] dark:text-gray-200">19 Sep 2018</span>
+<span class="text-[9px] text-sage/60 uppercase tracking-wider font-bold">12z Cycle</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-mono text-sage/80">0.765</span>
+<span class="material-symbols-outlined text-sage/30 text-sm ml-2 align-middle">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 bg-cream/95 backdrop-blur-lg dark:bg-monet-dark-bg border-t border-sage/10 px-8 py-3 pb-8 flex justify-between items-center max-w-lg mx-auto z-50">
+<button class="flex flex-col items-center gap-1 text-sage/40">
+<span class="material-symbols-outlined">input</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Input</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-cornflower">
+<span class="material-symbols-outlined font-bold">analytics</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Results</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-sage/40">
+<span class="material-symbols-outlined">landscape</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Map</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-sage/40">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Tools</span>
+</button>
+</nav>
+
+</body></html>

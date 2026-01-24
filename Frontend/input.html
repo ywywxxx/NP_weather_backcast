@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Weather Similarity Web Tool</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "cornflower": "#7096D1",
+                        "sage": "#8BA888",
+                        "cream": "#FFFDF5",
+                        "pale-yellow": "#FEF9E7",
+                        "monet-bg": "#F9F7F2",
+                        "monet-dark-bg": "#2D3032",
+                        "monet-accent": "#D1E0E0",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Crimson Pro", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1.25rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-monet-bg dark:bg-monet-dark-bg font-display text-[#4A5D4E] dark:text-[#EAE7DC];
+            }
+        }
+        .painterly-btn {
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(0,0,0,0.02));
+            box-shadow: 0 4px 12px -2px rgba(139, 168, 136, 0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .painterly-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 6px -1px rgba(139, 168, 136, 0.2);
+        }
+        .monet-card {
+            background-color: #FFFDF9;
+            border: 1px solid rgba(139, 168, 136, 0.15);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .dark .monet-card {
+            background-color: #383D3F;
+            border-color: rgba(112, 150, 209, 0.15);
+        }
+        .ios-segment-active {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen">
+<header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md dark:bg-monet-dark-bg/90 border-b border-sage/10">
+<div class="flex items-center p-4 justify-between max-w-lg mx-auto">
+<div class="text-sage flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">filter_vintage</span>
+</div>
+<h2 class="text-[#3A4D3F] dark:text-monet-bg text-lg font-serif font-bold leading-tight tracking-tight flex-1 text-center">Weather Similarity</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 text-cornflower/70">
+<span class="material-symbols-outlined">auto_fix_high</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-lg mx-auto pb-24 px-4">
+<section class="monet-card mt-6 rounded-2xl overflow-hidden">
+<h3 class="text-sage/80 dark:text-monet-bg/60 text-[11px] font-bold uppercase tracking-[0.2em] px-5 pt-6 pb-3 font-display">Target &amp; Forecast Input</h3>
+<div class="flex flex-col gap-0 px-4 mb-6">
+<div class="flex items-center p-3 justify-between bg-pale-yellow dark:bg-gray-800/40 rounded-t-2xl border-x border-t border-sage/10">
+<button class="p-2 text-sage/60 hover:text-sage transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<p class="text-[#4A5D4E] dark:text-white text-base font-serif font-semibold">October 2023</p>
+<button class="p-2 text-sage/60 hover:text-sage transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-7 border-x border-b border-sage/10 rounded-b-2xl bg-white dark:bg-black/10 p-2">
+<p class="text-sage/40 text-[10px] font-bold flex h-8 items-center justify-center">S</p>
+<p class="text-sage/40 text-[10px] font-bold flex h-8 items-center justify-center">M</p>
+<p class="text-sage/40 text-[10px] font-bold flex h-8 items-center justify-center">T</p>
+<p class="text-sage/40 text-[10px] font-bold flex h-8 items-center justify-center">W</p>
+<p class="text-sage/40 text-[10px] font-bold flex h-8 items-center justify-center">T</p>
+<p class="text-sage/40 text-[10px] font-bold flex h-8 items-center justify-center">F</p>
+<p class="text-sage/40 text-[10px] font-bold flex h-8 items-center justify-center">S</p>
+<button class="h-10 text-xs col-start-4"><div class="flex size-full items-center justify-center text-sage/60">1</div></button>
+<button class="h-10 text-xs"><div class="flex size-full items-center justify-center text-sage/60">2</div></button>
+<button class="h-10 text-xs"><div class="flex size-full items-center justify-center text-sage/60">3</div></button>
+<button class="h-10 text-xs"><div class="flex size-full items-center justify-center text-sage/60">4</div></button>
+<button class="h-10 text-xs text-white">
+<div class="flex size-9 mx-auto items-center justify-center rounded-full bg-cornflower painterly-btn font-bold">5</div>
+</button>
+<button class="h-10 text-xs"><div class="flex size-full items-center justify-center text-sage/60">6</div></button>
+<button class="h-10 text-xs"><div class="flex size-full items-center justify-center text-sage/60">7</div></button>
+</div>
+</div>
+<div class="px-5 py-2 mb-4">
+<p class="text-sage/70 dark:text-monet-accent/70 text-[10px] font-bold uppercase tracking-widest mb-3">Model Run (UTC)</p>
+<div class="flex h-12 items-center justify-center rounded-xl bg-sage/5 dark:bg-gray-900/30 p-1 border border-sage/10">
+<label class="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:ios-segment-active transition-all text-sm font-medium text-sage/60 has-[:checked]:text-sage">
+<span>00z</span><input class="hidden" name="time" type="radio" value="00z"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:ios-segment-active transition-all text-sm font-medium text-sage/60 has-[:checked]:text-sage">
+<span>06z</span><input class="hidden" name="time" type="radio" value="06z"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:ios-segment-active transition-all text-sm font-medium text-sage/60 has-[:checked]:text-sage">
+<span>12z</span><input checked="" class="hidden" name="time" type="radio" value="12z"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:ios-segment-active transition-all text-sm font-medium text-sage/60 has-[:checked]:text-sage">
+<span>18z</span><input class="hidden" name="time" type="radio" value="18z"/>
+</label>
+</div>
+</div>
+<div class="px-5 mb-6">
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-pale-yellow/40 border border-sage/10">
+<div class="flex flex-col gap-0.5 flex-1">
+<p class="text-sage/60 text-[9px] font-bold uppercase tracking-widest">Selected Model</p>
+<p class="text-[#3A4D3F] dark:text-white text-sm font-bold font-serif italic">ECMWF HRES 0.1°</p>
+<p class="text-sage/50 dark:text-monet-accent/50 text-[10px]">72-hour window active</p>
+</div>
+<div class="w-16 h-12 bg-center bg-no-repeat bg-cover rounded-lg border border-white shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKpx6zZbKl7s7uuOiMc3TYe-asFADa3hS2m8kO-Aw6CJra2zPFUz63pv7Ayycx8AJ4kJoKKeJQcPMoUf5QzhtFvVC4omQbbt6EZKl6lSAxizDopUmg-fhGj9RdB9H_ppTqQYK7eHYHSbK9mAd8JVWou72p7lkpOt00onyPnx6UcpeAQkmgIKyznr1iGBjfTGxJum5AfnKFO3UdOq5rh5BbD_UyH7rElw5ulNCNllIn-RrLxA4wIp4xsQzUPY0tuJ1p6no-X2IJCmY");'></div>
+</div>
+</div>
+<div class="px-5 pb-6">
+<button class="w-full bg-sage text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-3 painterly-btn">
+<span class="material-symbols-outlined text-xl">palette</span>
+                Run Similarity Search
+            </button>
+</div>
+</section>
+<section class="mt-6 monet-card rounded-2xl overflow-hidden">
+<h3 class="text-sage/80 dark:text-monet-bg/60 text-[11px] font-bold uppercase tracking-[0.2em] px-5 pt-6 pb-3 font-display">Most Similar Historical Days</h3>
+<div class="overflow-hidden">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-sage/5 text-sage/70 text-[10px] font-bold uppercase border-y border-sage/5">
+<th class="px-5 py-3 w-16">Rank</th>
+<th class="px-5 py-3">Date</th>
+<th class="px-5 py-3 text-right">Score</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-sage/5">
+<tr class="bg-cornflower/5">
+<td class="px-5 py-4 text-xs font-bold text-cornflower">#1</td>
+<td class="px-5 py-4 text-xs font-serif font-medium text-[#3A4D3F] dark:text-gray-200">14 Oct 1998 <span class="text-[10px] text-sage/60 ml-1">12z</span></td>
+<td class="px-5 py-4 text-xs font-mono text-right text-sage">0.842</td>
+</tr>
+<tr class="bg-cornflower/5">
+<td class="px-5 pb-5" colspan="3">
+<div class="w-full h-32 bg-cream/50 dark:bg-gray-800/50 rounded-xl border border-cornflower/20 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-20 flex items-end">
+<div class="w-full h-full bg-gradient-to-t from-cornflower to-transparent" style="clip-path: polygon(0% 80%, 15% 65%, 25% 75%, 35% 55%, 45% 60%, 55% 35%, 65% 45%, 75% 25%, 85% 40%, 95% 15%, 100% 30%, 100% 100%, 0% 100%);"></div>
+</div>
+<p class="text-[10px] font-medium text-sage/60 italic tracking-wider">Visual Comparison Plot</p>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-5 py-4 text-xs font-bold text-sage/40">#2</td>
+<td class="px-5 py-4 text-xs font-serif text-[#3A4D3F] dark:text-gray-200">22 Oct 2005 <span class="text-[10px] text-sage/60 ml-1">00z</span></td>
+<td class="px-5 py-4 text-xs font-mono text-right text-sage/50">0.821</td>
+</tr>
+<tr>
+<td class="px-5 py-4 text-xs font-bold text-sage/40">#3</td>
+<td class="px-5 py-4 text-xs font-serif text-[#3A4D3F] dark:text-gray-200">03 Nov 2012 <span class="text-[10px] text-sage/60 ml-1">06z</span></td>
+<td class="px-5 py-4 text-xs font-mono text-right text-sage/50">0.798</td>
+</tr>
+</tbody>
+</table>
+</div>
+<button class="w-full py-5 text-xs font-bold text-cornflower uppercase tracking-widest text-center hover:bg-cornflower/5 transition-colors border-t border-sage/5">View Full Archive</button>
+</section>
+<section class="mt-6 monet-card rounded-2xl p-5">
+<h3 class="text-sage/80 dark:text-monet-bg/60 text-[11px] font-bold uppercase tracking-[0.2em] mb-4 font-display">Method &amp; Diagnostics</h3>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="bg-pale-yellow/30 p-4 rounded-xl border border-sage/10">
+<p class="text-sage/60 text-[9px] font-bold uppercase tracking-widest mb-1">Spearman</p>
+<p class="text-xl font-bold text-cornflower font-serif italic">0.92</p>
+</div>
+<div class="bg-pale-yellow/30 p-4 rounded-xl border border-sage/10">
+<p class="text-sage/60 text-[9px] font-bold uppercase tracking-widest mb-1">Variance</p>
+<p class="text-xl font-bold text-cornflower font-serif italic">84.3%</p>
+</div>
+</div>
+<div class="bg-cornflower/5 p-4 rounded-xl border border-cornflower/10">
+<p class="text-[11px] text-sage/80 dark:text-monet-accent/70 leading-relaxed italic">
+                The similarity ensemble leverages a painterly approach to atmospheric weighting, prioritizing latent features in the upper troposphere.
+            </p>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 bg-cream/95 backdrop-blur-lg dark:bg-monet-dark-bg border-t border-sage/10 px-8 py-3 pb-8 flex justify-between items-center max-w-lg mx-auto z-50">
+<button class="flex flex-col items-center gap-1 text-cornflower">
+<span class="material-symbols-outlined font-bold">input</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Input</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-sage/40">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Results</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-sage/40">
+<span class="material-symbols-outlined">landscape</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Map</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-sage/40">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Tools</span>
+</button>
+</nav>
+
+</body></html>
