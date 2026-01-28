@@ -34,8 +34,6 @@ def get_instant_data(location: Location, timestamp, api_key: Optional[str] = Non
 
 
 def get_yesterday_data(location: Location, api_key: Optional[str] = None):
-
-
     if api_key is None:
         api_key = os.getenv("OpenWeather_API_KEY")
 

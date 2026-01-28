@@ -7,6 +7,7 @@ from location_info import Location
 from collections import defaultdict
 from datetime import datetime
 
+# The core library to to convert the real time into the index time; 
 
 class CheckTime:
     def __init__(

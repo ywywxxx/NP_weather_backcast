@@ -2,6 +2,8 @@ import requests
 from timezonefinder import TimezoneFinder 
 
 tf = TimezoneFinder()
+# Basic Library to get the gridX, gridY of the location; 
+
 
 class Location:
     def __init__(
@@ -30,18 +32,17 @@ class Location:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         return response.json()["properties"]
-    
-# # test:
-# loc = Location(
-#     name="Stanford",
-#     lat=37.4275,
-#     lon=-122.1697,
-# )
 
-# print("timezone:", loc.timezone)
-# print("office:", loc.office)
-# print("gridX:", loc.gridX)
-# print("gridY:", loc.gridY)
+
+if __name__ == '__main__' : 
+    loc = Location( name="Stanford",     
+                     lat=37.4275,     
+                     lon=-122.1697, )
+
+    print("timezone:", loc.timezone)
+    print("office:", loc.office)
+    print("gridX:", loc.gridX)
+    print("gridY:", loc.gridY)
 
 # class location:
 #     def __init__(
